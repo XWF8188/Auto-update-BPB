@@ -7,6 +7,7 @@
 
 2. 配置`github Actions`: 在仓库目录下创建`.github/workflows`文件夹，并创建`update_worker.yml`文件。
 3. 无需其他配置，GitHub 默认的 `GITHUB_TOKEN` 权限即可推送更新。
+4. 你可以手动点击 Run workflow，也可以等待每天定时自动检查。
 
 ---
 
