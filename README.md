@@ -1,4 +1,4 @@
-# [![Auto Update _worker.js](https://github.com/XWF8188/Auto-update-B/actions/workflows/update_worker.yml/badge.svg)](https://github.com/XWF8188/Auto-update-B/actions/workflows/update_worker.yml)
+# <h1 align="center"> [![Auto Update _worker.js](https://github.com/XWF8188/Auto-update-B/actions/workflows/update_worker.yml/badge.svg)](https://github.com/XWF8188/Auto-update-B/actions/workflows/update_worker.yml)
 
 # ♻️ 自动同步 `B-W-P` 项目的最新 `worker.js` 文件。
 
