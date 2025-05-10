@@ -33,19 +33,6 @@
 
 ---
 
-## 📂 目录结构
-
-/
-├── _worker.js         
-├── version.txt        
-├── LICENSE                    
-├── README.md          
-└── .github/
-    └── workflows/
-        └── update_worker.yml
-
----
-
 ## ⚙️ 配置说明
 
 - 无需手动设置 `Token`：默认使用 `GitHub` 提供的 `GITHUB_TOKEN` 进行权限认证。
