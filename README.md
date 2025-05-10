@@ -2,7 +2,7 @@
 
 # 自动同步 `B-W-P` 项目的最新 `worker.js` 文件。
 
-## 🚀 快速开始（适合工作流）
+## 🧩 快速开始（适合工作流）
 
 1. 新建github仓库:把`B-W-P`项目代码同步到仓库。
 
@@ -41,7 +41,7 @@
 
 ---
 
-## 📜 开源协议
+## 📑 开源协议
 
 - 本项目使用 `MIT License` 开源。
 
@@ -49,7 +49,7 @@
 
 ---
 
-## 📢 特别说明
+## 📣 特别说明
 
 - 本仓库同步的内容来源于 [B-W-P](https://github.com/bia-pain-bache)。
 - 原项目版权归原作者所有，本项目仅用于自动同步更新，不对原内容进行修改。
@@ -78,7 +78,7 @@
 
 ---
 
-## ℹ️ 常用IP优选获取方式
+## 🅿️ 常用IP优选获取方式
 - cleanIP/优选IP：[地址一](https://www.wetest.vip/page/cloudflare/address_v4.html) [地址二](https://ipdb.030101.xyz/bestcf/) [地址三](https://mrxn.net/BESTCFDOMAIN)
 
 ---
