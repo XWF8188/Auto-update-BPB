@@ -64,7 +64,7 @@
 | **PROXY_IP**  | 来源于网络分享：`proxy.xxxxxxxx.tk`、`edgetunnel.anycast.eu.org`、`ts.hpc.tw`、`cdn.xn--b6gac.eu.org`、`cdn-all.xn--b6gac.eu.org`、`bestproxy.onecf.eu.org` [CMLiussss提供](https://t.me/CMLiussss_channel/84)、 [IPDB 提供](https://ipdb.030101.xyz/bestproxy/)、[nslookup.io提供](https://www.nslookup.io/domains/bpb.yousef.isegaro.com/dns-records/)|
 | **SUB_PATH**  | 订阅的`URI`  |
 | **FALLBACK**  | 后退域默认修改为`example.com` |
-| **DOH_URL**  | 核心DOH |
+| **DOH_URL**  | 核心`DOH` |
 
 ---
 
