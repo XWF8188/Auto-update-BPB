@@ -5,7 +5,7 @@
 
 1. 新建github仓库:把`B-W-P`项目代码同步到仓库。
 
-2. 配置`github Actions`: 在仓库目录下创建`.github/workflows`文件夹，并创建`update_worker.yml`文件。
+2. 配置`github Actions`: 在仓库目录下创建`.github/workflows`文件夹，并创建[update_worker.yml](https://github.com/XWF8188/Auto-update-B/blob/main/创建仓库源码.js)文件。
 3. 无需其他配置，GitHub 默认的 `GITHUB_TOKEN` 权限即可推送更新。
 4. 你可以手动点击 Run workflow，也可以等待每天定时自动检查。
 
