@@ -58,21 +58,21 @@
 
 ## 🔐 变量的使用
 
-| 变量  | 值 | 必填 |
-| :---: | :---: | :---:|
-| **UUID**  | `VLESS UUID`，[UUID生成](https://1024tools.com/uuid)  |:heavy_check_mark:|
-| **TR_PASS**  | `Trojan Password`， [密码生成](https://password.github.net.cn/)  |:heavy_check_mark:|
-| **PROXY_IP**  | 来源于网络分享：`proxy.xxxxxxxx.tk`、`edgetunnel.anycast.eu.org`、`ts.hpc.tw`、`cdn.xn--b6gac.eu.org`、`cdn-all.xn--b6gac.eu.org`、`bestproxy.onecf.eu.org` [CMLiussss提供](https://t.me/CMLiussss_channel/84)、 [IPDB 提供](https://ipdb.030101.xyz/bestproxy/)、[nslookup.io提供](https://www.nslookup.io/domains/bpb.yousef.isegaro.com/dns-records/)、 [cdn-xx-b6gac.acu.org](https://www.nslookup.io/domains/cdn.xn--b6gac.eu.org/dns-records/)|:heavy_check_mark:|
-| **SUB_PATH**  | 订阅的`URI` |:x:|
-| **FALLBACK**  | 后退域默认修改为`example.com` |:x:|
-| **DOH_URL**  | 核心`DOH` |:x:|
+|变量|值|选填|
+|:---:|:---:|:---:|
+|**UUID**|`VLESS UUID`，[UUID生成](https://1024tools.com/uuid) |:heavy_check_mark:|
+|**TR_PASS**|`Trojan Password`， [密码生成](https://password.github.net.cn/) |:heavy_check_mark:|
+|**PROXY_IP**| 来源于网络分享：`proxy.xxxxxxxx.tk`、`edgetunnel.anycast.eu.org`、`ts.hpc.tw`、`cdn.xn--b6gac.eu.org`、`cdn-all.xn--b6gac.eu.org`、`bestproxy.onecf.eu.org` [CMLiussss提供](https://t.me/CMLiussss_channel/84)、 [IPDB 提供](https://ipdb.030101.xyz/bestproxy/)、[nslookup.io提供](https://www.nslookup.io/domains/bpb.yousef.isegaro.com/dns-records/)、 [cdn-xx-b6gac.acu.org](https://www.nslookup.io/domains/cdn.xn--b6gac.eu.org/dns-records/)|:heavy_check_mark:|
+|**SUB_PATH**|订阅的`URI`|:x:|
+|**FALLBACK**|后退域默认修改为`example.com` |:x:|
+|**DOH_URL**|核心`DOH`|:x:|
 
 ---
 
-| KV命名空间  | 类型 |
-| :-------------: | :-------------: |
-| **kv（必须小写）**  | 名称  |
-| **自定义名字（随意）**  | 值  |
+|KV命名空间|类型|必填| 
+|:---:|:---:|:---:|
+|**kv（必须小写）**|名称|:heavy_check_mark:|
+|**自定义名字（随意）**|值|:heavy_check_mark:|
 
 - `/panel`，部署成功后，在 url 后面增加`/panel`来进行访问面板，访问面板修改的密码将会保存在`kv`之中。
 
