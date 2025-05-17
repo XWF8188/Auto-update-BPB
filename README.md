@@ -24,7 +24,7 @@
 
 > `GitHub Actions` 会每日 01:00（UTC 时间）自动运行：
 
-1. 获取上游仓库的最新 `Release 版本号`
+1. 获取上游仓库的最新 `Release` 版本号
 2. 比较本地 `version.txt` 的记录
 3. 若版本不同，则自动下载并替换 `_worker.js`
 4. 更新 `version.txt`
