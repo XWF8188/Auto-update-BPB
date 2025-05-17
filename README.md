@@ -61,7 +61,7 @@
 | 变量  | 值 |
 | :-------------: | :-------------: |
 | **UUID**  | `VLESS UUID`，[在线生成](https://1024tools.com/uuid)  |
-| **TR_PASS**  | `Trojan` [密码生成](https://password.github.net.cn/)  |
+| **TR_PASS**  | `Trojan`， [密码生成](https://password.github.net.cn/)  |
 | **PROXY_IP**  | 来源于网络分享：`proxy.xxxxxxxx.tk`、`edgetunnel.anycast.eu.org`、`ts.hpc.tw`、`cdn.xn--b6gac.eu.org`、`cdn-all.xn--b6gac.eu.org`、`bestproxy.onecf.eu.org` [CMLiussss提供](https://t.me/CMLiussss_channel/84)、 [IPDB 提供](https://ipdb.030101.xyz/bestproxy/)、[nslookup.io提供](https://www.nslookup.io/domains/bpb.yousef.isegaro.com/dns-records/)、 [cdn-xx-b6gac.acu.org](https://www.nslookup.io/domains/cdn.xn--b6gac.eu.org/dns-records/)|
 | **SUB_PATH**  | 订阅的`URI`  |
 | **FALLBACK**  | 后退域默认修改为`example.com` |
@@ -74,7 +74,7 @@
 | **kv（必须小写）**  | 名称  |
 | **自定义名字（随意）**  | 值  |
 
-- `/panel`，部署成功后，在 url 后面增加`/panel`来进行访问面板，访问面板修改的密码将会保存在`kv`对里。
+- `/panel`，部署成功后，在 url 后面增加`/panel`来进行访问面板，访问面板修改的密码将会保存在`kv`之中。
 
 ---
 
