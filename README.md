@@ -90,5 +90,5 @@
 
 ---
 ## 🅿️ 自选IP优选工具的使用
-1. win 电脑下载 IP优选工具:[CF优选官方IP[win电脑版].7z](https://github.com/XWF8188/Auto-update-B/blob/main/IP优选工具/CF优选官方IP%5Bwin电脑版%5D.7z)，解压后，退出代理，运行本软件。
-2. 下载[CloudflareScanner](https://github.com/bia-pain-bache/Cloudflare-Clean-IP-Scanner/releases/tag/v2.2.5)，解压后，退出代理，运行本软件。
+1. win电脑下载: [IP优选[win电脑版].7z](https://github.com/XWF8188/Auto-update-B/blob/main/IP优选工具/CF优选官方IP%5Bwin电脑版%5D.7z)，解压后，退出代理，运行本软件。
+2. 链接下载: [IP优选[CloudflareScanner]](https://github.com/bia-pain-bache/Cloudflare-Clean-IP-Scanner/releases/tag/v2.2.5)，解压后，退出代理，运行本软件。
