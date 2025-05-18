@@ -75,18 +75,18 @@
 |**值**|自定义名字（随意）|:heavy_check_mark:|
 
 1. 本存储库`main`主线默认为自动升级为最新版本。
-2. 代理IP/域名(`Proxy IPs/Domains`)的变量区别：
+2. 代理IP/域名(`Proxy IP/Domains`)的变量区别：
    - v3.2.0 及以上版本为`PROXY_IP`。
    - v3.1.4 及以下版本为`PROXYIP`。
 3. `/panel`，部署成功后，在 url 后面增加`/panel`来进行访问面板，访问面板修改的密码将会保存在`kv`之中。
 4. 面板设置要👀注意以下区别：
-   - v3.2.0 及以上版本，`优选IP/域名（Clean IPs/Domains）`用回车键`ENTER`分隔。
-   - v3.1.4 及以下版本，`优选IP/域名（Clean IPs /Domains）`用英文逗号`,`分隔。
+   - v3.2.0 及以上版本，`优选IP/域名（Clean IP/Domains）`用回车键`ENTER`分隔。
+   - v3.1.4 及以下版本，`优选IP/域名（Clean IP/Domains）`用英文逗号`,`分隔。
 
 ---
 
 ## 🅿️ 常用IP优选获取方式
-- cleanIP/优选IP：[地址一](https://www.wetest.vip/page/cloudflare/address_v4.html) [地址二](https://ipdb.030101.xyz/bestcf/) [地址三](https://mrxn.net/BESTCFDOMAIN)
+- Clean IP/优选 IP：[地址一](https://www.wetest.vip/page/cloudflare/address_v4.html) [地址二](https://ipdb.030101.xyz/bestcf/) [地址三](https://mrxn.net/BESTCFDOMAIN)
 
 ---
 ## 🅿️ 自选IP优选工具的使用
