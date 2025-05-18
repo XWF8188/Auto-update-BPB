@@ -60,8 +60,8 @@
 
 |变量|值|选填|
 |:---:|:---:|:---:|
-|**UUID**|`VLESS UUID`，[UUID生成](https://1024tools.com/uuid) |:heavy_check_mark:|
-|**TR_PASS**|`Trojan Password`， [密码生成](https://password.github.net.cn/) |:heavy_check_mark:|
+|**UUID**|`VLESS UUID`，[UUID生成](https://1024tools.com/uuid)，用于生成 VLESS 节点配置|:heavy_check_mark:|
+|**TR_PASS**|`Trojan Password`，[密码生成](https://password.github.net.cn/) ，用于生成 Trojan 节点配置|:heavy_check_mark:|
 |**PROXY_IP**| 来源于网络分享：`proxy.xxxxxxxx.tk`、`edgetunnel.anycast.eu.org`、`ts.hpc.tw`、`cdn.xn--b6gac.eu.org`、`cdn-all.xn--b6gac.eu.org`、`bestproxy.onecf.eu.org` [CMLiussss提供](https://t.me/CMLiussss_channel/84)、 [IPDB 提供](https://ipdb.030101.xyz/bestproxy/)、[nslookup.io提供](https://www.nslookup.io/domains/bpb.yousef.isegaro.com/dns-records/)、 [cdn-xx-b6gac.acu.org](https://www.nslookup.io/domains/cdn.xn--b6gac.eu.org/dns-records/)|:heavy_check_mark:|
 |**SUB_PATH**|订阅的`URI`|:x:|
 |**FALLBACK**|后退域默认修改为`example.com` |:x:|
