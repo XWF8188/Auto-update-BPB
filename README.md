@@ -47,6 +47,18 @@
 
 - 无需手动设置 `Token`：默认使用 `GitHub` 提供的 `GITHUB_TOKEN` 进行权限认证。
 - 如需修改同步源：编辑 `.github/workflows/update_worker.yml`，修改源仓库地址即可。
+- **更新类型配置（`update_type.txt`）：**
+  - 在仓库根目录下创建或修改 `update_type.txt` 文件。
+  - 文件内容为 `1`：表示定时任务将更新到**最新正式发布版本**。
+  - 文件内容为 `0`：表示定时任务将更新到**最新预发布版本**。
+  - **如果 `update_type.txt` 文件不存在，工作流会自动创建它并默认设置为 `1`（正式版）。**
+  - **手动触发时，您可以通过 GitHub Actions 界面选择更新类型，此选择将覆盖 `update_type.txt` 的设置。**
+- **更新成功通知：**
+  - 工作流在成功更新并提交代码后，会尝试复用一个特定的 GitHub Issue 进行通知。
+  - 该 Issue 的标题统一为 `_worker.js 自动更新通知`，并带有 `auto-update-status-issue` 标签。
+  - 如果该 Issue 已存在，新的更新信息将作为评论添加到该 Issue 中，这样可以保持通知集中在一个地方。
+  - 如果该 Issue 不存在，工作流会创建一个新的 Issue。
+  - 您可以通过关注该仓库的 Issue 动态来接收通知。
 
 ---
 
