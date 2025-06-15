@@ -101,8 +101,8 @@
    - v3.1.4 及以下版本为`PROXYIP`。
 3. `/panel`，部署成功后，在 url 后面增加`/panel`来进行访问面板，访问面板修改的密码将会保存在`kv`之中。
 4. 面板设置要👀注意以下区别：
-   - v3.2.0 及以上版本，`优选IP/域名（Clean IP/Domains）`用回车键`ENTER`分隔。
-   - v3.1.4 及以下版本，`优选IP/域名（Clean IP/Domains）`用英文逗号`,`分隔。
+   - v3.2.0 及以上版本，`优选IP/域名（Clean IP/Domains）和代理IP/域名(Proxy IP/Domains)`用回车键`ENTER`分隔。
+   - v3.1.4 及以下版本，`优选IP/域名（Clean IP/Domains）和代理IP/域名(Proxy IP/Domains)`用英文逗号`,`分隔。
 
 ---
 
