@@ -1,100 +1,61 @@
-name: Sync Latest Release from Upstream
+name: Build 和 Release
 
-on:
-  workflow_dispatch:     # 手动触发
-  workflow_run:          # Auto Update _worker.js 成功后触发
-    workflows: ["Auto Update _worker.js"]  # 必须和 Auto Update workflow 的 name 一致
-    types:
-      - completed
+permissions:
+  contents: write
+
+于:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *'
 
 jobs:
-  sync:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+  build:
+    if: |
+      github.event_name == 'workflow_dispatch' || 
+      (github.event_name == 'schedule' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      - name: Checkout target repo
+      - name: Check out the code
         uses: actions/checkout@v4
+
+      - name: Get release version
+        id: get_version
+        run: echo "RELEASE_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
+      - name: Check release version
+        run: echo "Release version is $RELEASE_VERSION"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          node-version: "latest"
 
-      - name: Install GitHub CLI
+      - name: Install dependencies
+        run: npm install --production
+
+      - name: Build project
+        run: npm run build
+
+      - name: Read release note
+        id: read_release
+        shell: bash
         run: |
-          sudo apt-get update
-          sudo apt-get install -y jq gh
+          r=$(cat RELEASE.md)         
+          r="${r//'%'/'%25'}"                               
+          r="${r//$'\n'/'%0A'}"                             
+          r="${r//$'\r'/'%0D'}"                             
+          echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT          
 
-      - name: Authenticate GitHub CLI
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
-      - name: Check upstream latest release
-        id: check
-        env:
-          UPSTREAM: bia-pain-bache/BPB-Worker-Panel
-        run: |
-          # 获取上游最新 release
-          upstream=$(gh api repos/$UPSTREAM/releases/latest)
-          up_tag=$(echo "$upstream" | jq -r .tag_name)
-
-          echo "upstream_tag=$up_tag" >> $GITHUB_OUTPUT
-
-          # 获取自己仓库最新 release（可能为空）
-          my_latest=$(gh release list --limit 1 | awk '{print $1}')
-          echo "my_tag=$my_latest" >> $GITHUB_OUTPUT
-
-          if [ "$up_tag" = "$my_latest" ]; then
-            echo "⚠️ 上游没有新 release，跳过同步"
-            exit 0
-          fi
-
-      - name: Sync latest release
-        if: steps.check.outputs.upstream_tag != steps.check.outputs.my_tag
-        env:
-          UPSTREAM: bia-pain-bache/BPB-Worker-Panel
-        run: |
-          release=$(gh api repos/$UPSTREAM/releases/latest)
-
-          tag=$(echo "$release" | jq -r .tag_name)
-          name=$(echo "$release" | jq -r .name)
-          body=$(echo "$release" | jq -r .body)
-          draft=$(echo "$release" | jq -r .draft)
-          prerelease=$(echo "$release" | jq -r .prerelease)
-
-          echo "🔄 同步最新 release: $tag ($name)"
-
-          # 配置 git 用户信息（避免 author identity unknown）
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # 拉取上游 tag 并切换
-          git fetch https://github.com/$UPSTREAM.git tag $tag || true
-          git checkout $tag
-
-          # 删除上游 workflows，避免 push 被拒绝
-          rm -rf .github/workflows
-
-          # 强制推送 tag 到自己仓库
-          git tag -f $tag
-          git push origin $tag --force
-
-          # 创建 release
-          gh release create "$tag" \
-            --title "$name" \
-            --notes "$body" \
-            $( [ "$draft" = "true" ] && echo "--draft" ) \
-            $( [ "$prerelease" = "true" ] && echo "--prerelease" )
-
-          # 下载并上传附件
-          for asset_id in $(echo "$release" | jq -r '.assets[].id'); do
-            asset_name=$(echo "$release" | jq -r ".assets[] | select(.id==$asset_id) | .name")
-            asset_url=$(echo "$release" | jq -r ".assets[] | select(.id==$asset_id) | .url")
-
-            echo "⬇️ 下载附件: $asset_name"
-            curl -sL -H "Accept: application/octet-stream" \
-                 -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                 "$asset_url" -o "$asset_name"
-
-            echo "⬆️ 上传附件: $asset_name"
-            gh release upload "$tag" "$asset_name" --clobber
-          done
+      - name: Upload Release Assets
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/*
+          tag: v${{ env.RELEASE_VERSION }}
+          release_name: Release v${{ env.RELEASE_VERSION }}
+          overwrite: true
+          file_glob: true
+          prerelease: ${{ github.ref != 'refs/heads/main' }}
+          promote: ${{ github.ref == 'refs/heads/main' }}
+          body: ${{ steps.read_release.outputs.RELEASE_BODY }}
