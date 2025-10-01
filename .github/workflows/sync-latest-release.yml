@@ -1,0 +1,89 @@
+name: Sync Latest Release from Upstream
+
+on:
+  workflow_dispatch:     # 手动触发
+  workflow_run:          # Auto Update _worker.js 成功后触发
+    workflows: ["Auto Update _worker.js"]   # 这里是工作流的名字 (name: 字段)
+    types:
+      - completed
+
+jobs:
+  sync:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq gh
+
+      - name: Authenticate GitHub CLI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Check upstream latest release
+        id: check
+        env:
+          UPSTREAM: bia-pain-bache/BPB-Worker-Panel
+        run: |
+          # 获取上游最新 release
+          upstream=$(gh api repos/$UPSTREAM/releases/latest)
+          up_tag=$(echo "$upstream" | jq -r .tag_name)
+
+          echo "upstream_tag=$up_tag" >> $GITHUB_OUTPUT
+
+          # 获取自己仓库最新 release（可能为空）
+          my_latest=$(gh release list --limit 1 | awk '{print $1}')
+          echo "my_tag=$my_latest" >> $GITHUB_OUTPUT
+
+          if [ "$up_tag" = "$my_latest" ]; then
+            echo "⚠️ 上游没有新 release，跳过同步"
+            exit 0
+          fi
+
+      - name: Sync latest release
+        if: steps.check.outputs.upstream_tag != steps.check.outputs.my_tag
+        env:
+          UPSTREAM: bia-pain-bache/BPB-Worker-Panel
+        run: |
+          release=$(gh api repos/$UPSTREAM/releases/latest)
+
+          tag=$(echo "$release" | jq -r .tag_name)
+          name=$(echo "$release" | jq -r .name)
+          body=$(echo "$release" | jq -r .body)
+          draft=$(echo "$release" | jq -r .draft)
+          prerelease=$(echo "$release" | jq -r .prerelease)
+
+          echo "同步最新 release: $tag ($name)"
+
+          # 拉取并推送 tag
+          git fetch https://github.com/$UPSTREAM.git tag $tag || true
+          git push origin $tag || true
+
+          # 创建 release
+          gh release create "$tag" \
+            --title "$name" \
+            --notes "$body" \
+            $( [ "$draft" = "true" ] && echo "--draft" ) \
+            $( [ "$prerelease" = "true" ] && echo "--prerelease" )
+
+          # 下载并上传附件
+          for asset_id in $(echo "$release" | jq -r '.assets[].id'); do
+            asset_name=$(echo "$release" | jq -r ".assets[] | select(.id==$asset_id) | .name")
+            asset_url=$(echo "$release" | jq -r ".assets[] | select(.id==$asset_id) | .url")
+
+            echo "下载附件: $asset_name"
+            curl -sL -H "Accept: application/octet-stream" \
+                 -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                 "$asset_url" -o "$asset_name"
+
+            echo "上传附件: $asset_name"
+            gh release upload "$tag" "$asset_name" --clobber
+          done
