@@ -3,7 +3,7 @@ name: Sync Latest Release from Upstream
 on:
   workflow_dispatch:     # 手动触发
   workflow_run:          # Auto Update _worker.js 成功后触发
-    workflows: ["Auto Update _worker.js"]   # 这里是工作流的名字 (name: 字段)
+    workflows: ["Auto Update _worker.js"]
     types:
       - completed
 
@@ -63,9 +63,27 @@ jobs:
 
           echo "同步最新 release: $tag ($name)"
 
-          # 拉取并推送 tag
+          # 拉取上游 tag 并检出
           git fetch https://github.com/$UPSTREAM.git tag $tag || true
-          git push origin $tag || true
+          git checkout $tag
+
+          # 备份自己仓库的 workflows（避免被覆盖）
+          mkdir -p ../my_workflows_backup
+          cp -r .github/workflows ../my_workflows_backup/ || true
+
+          # 删除上游 workflows
+          rm -rf .github/workflows
+
+          # 恢复自己仓库 workflows
+          mkdir -p .github/workflows
+          cp -r ../my_workflows_backup/* .github/workflows/ || true
+
+          git add -A
+          git commit -m "Sync $tag (remove upstream workflows, keep own workflows)" || true
+
+          # 强制推送 tag 到自己仓库
+          git tag -f $tag
+          git push origin $tag --force
 
           # 创建 release
           gh release create "$tag" \
