@@ -3,7 +3,7 @@ name: Sync Latest Release from Upstream
 on:
   workflow_dispatch:     # 手动触发
   workflow_run:          # Auto Update _worker.js 成功后触发
-    workflows: ["Auto Update _worker.js"]
+    workflows: ["Auto Update _worker.js"]  # 必须和 Auto Update workflow 的 name 一致
     types:
       - completed
 
@@ -61,25 +61,18 @@ jobs:
           draft=$(echo "$release" | jq -r .draft)
           prerelease=$(echo "$release" | jq -r .prerelease)
 
-          echo "同步最新 release: $tag ($name)"
+          echo "🔄 同步最新 release: $tag ($name)"
 
-          # 拉取上游 tag 并检出
+          # 配置 git 用户信息（避免 author identity unknown）
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # 拉取上游 tag 并切换
           git fetch https://github.com/$UPSTREAM.git tag $tag || true
           git checkout $tag
 
-          # 备份自己仓库的 workflows（避免被覆盖）
-          mkdir -p ../my_workflows_backup
-          cp -r .github/workflows ../my_workflows_backup/ || true
-
-          # 删除上游 workflows
+          # 删除上游 workflows，避免 push 被拒绝
           rm -rf .github/workflows
-
-          # 恢复自己仓库 workflows
-          mkdir -p .github/workflows
-          cp -r ../my_workflows_backup/* .github/workflows/ || true
-
-          git add -A
-          git commit -m "Sync $tag (remove upstream workflows, keep own workflows)" || true
 
           # 强制推送 tag 到自己仓库
           git tag -f $tag
@@ -97,11 +90,11 @@ jobs:
             asset_name=$(echo "$release" | jq -r ".assets[] | select(.id==$asset_id) | .name")
             asset_url=$(echo "$release" | jq -r ".assets[] | select(.id==$asset_id) | .url")
 
-            echo "下载附件: $asset_name"
+            echo "⬇️ 下载附件: $asset_name"
             curl -sL -H "Accept: application/octet-stream" \
                  -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                  "$asset_url" -o "$asset_name"
 
-            echo "上传附件: $asset_name"
+            echo "⬆️ 上传附件: $asset_name"
             gh release upload "$tag" "$asset_name" --clobber
           done
